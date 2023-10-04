@@ -1,5 +1,6 @@
 const { db } = require('./bancodedados');
-const { usuarios } = db;
+const { usuarios, tarefas } = db;
+const { feitas, porFazer } = tarefas;
 
 function validadorAdmin(req, res, next) {
     const { admin, senha } = req.query;
@@ -75,6 +76,23 @@ function verificadorDeId(req, res, next) {
     }
 }
 
+function verificadorDeIdTarefa(req, res, next) {
+    let { id } = req.params;
+    id = Number(id);
+    let { idDaTarefa } = req.query;
+    idDaTarefa = Number(idDaTarefa);
+    const todasAsTarefas = [...feitas, ...porFazer]
+    const tarefaExistente = todasAsTarefas.some((tarefa) => {
+        return tarefa.id === id && tarefa.idDaTarefa === idDaTarefa;
+    })
+    if (tarefaExistente) {
+        next();
+    }
+    else {
+        return res.status(400).json({ "menssagem": "Id de usuário inexistente." });
+    }
+}
+
 function buscarConta(id) {
     const usuarioEncontrado = usuarios.filter((usuario) => {
         return usuario.id === id;
@@ -93,5 +111,6 @@ module.exports = {
     validadorEmail,
     verificadorSenha,
     verificadorDeId,
-    buscarConta
+    buscarConta,
+    verificadorDeIdTarefa
 }

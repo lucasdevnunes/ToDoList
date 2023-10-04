@@ -1,4 +1,4 @@
-db = {
+let db = {
     usuarios: [],
     tarefas: {
         porFazer: [],
@@ -7,6 +7,7 @@ db = {
 }
 
 let geradorDeId = 1;
+
 
 module.exports = {
     db,

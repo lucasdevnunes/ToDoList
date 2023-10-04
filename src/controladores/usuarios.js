@@ -19,6 +19,7 @@ function adicionarUsuario(req, res) {
         }
         usuarios.push({
             id: geradorDeId,
+            contadorTarefas: 0,
             email,
             senha
         })
