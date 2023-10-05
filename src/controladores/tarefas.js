@@ -24,7 +24,6 @@ function adicionarTarefa(req, res) {
     const usuario = buscarConta(id)
     const { titulo, descricao } = req.body;
     try {
-
         if (titulo && descricao) {
             let data = format(new Date(), "dd/MM/yyyy HH:mm:ss")
             porFazer.push({
@@ -60,18 +59,17 @@ function atualizarTarefa(req, res) {
             const buscaIdPorFazer = porFazer.filter((porFazer) => {
                 return porFazer.id === id && porFazer.idDaTarefa === idDaTarefa;
             })
-            console.log(feitas, porFazer);
             if (buscaIdFeitas.length === 1 || buscaIdPorFazer.length === 1) {
                 if (buscaIdFeitas.length === 1) {
+                    const indiceDaTarefa = feitas.indexOf((feita) => {
+                        return feita.id === id && feita.idDaTarefa === idDaTarefa;
+                    })
                     buscaIdFeitas[0].titulo = titulo;
                     buscaIdFeitas[0].descricao = descricao;
                     if (feito === 'true' || feito === 'false') {
                         if (feito === 'false') {
                             feito = false;
                             buscaIdFeitas[0].feito = feito;
-                            const indiceDaTarefa = feitas.indexOf((feita) => {
-                                return feita.idDaTarefa === idDaTarefa;
-                            })
                             feitas.splice(indiceDaTarefa, 1);
                             porFazer.push(buscaIdFeitas[0])
                             return res.status(200).json({ "menssagem": "Tarefa atualizada com sucesso." });
@@ -88,30 +86,23 @@ function atualizarTarefa(req, res) {
 
                 }
                 if (buscaIdPorFazer.length === 1) {
+                    const indiceDaTarefa = porFazer.findIndex((porFazer) => {
+                        return porFazer.id === id && porFazer.idDaTarefa === idDaTarefa;
+                    })
                     buscaIdPorFazer[0].titulo = titulo;
                     buscaIdPorFazer[0].descricao = descricao;
                     if (feito === 'true' || feito === 'false') {
                         if (feito === 'true') {
-                            console.log(1);
                             feito = true;
-                            console.log(2);
                             buscaIdPorFazer[0].feito = feito;
-                            console.log(3);
-                            const indiceDaTarefa = feitas.indexOf((feita) => {
-                                return feita.idDaTarefa === idDaTarefa;
-                            })
-                            console.log(4);
-                            porFazer.splice(indiceDaTarefa, 1);
-                            console.log(5);
+
+                            const excluida = porFazer.splice(indiceDaTarefa, 1);
                             feitas.push(buscaIdPorFazer[0])
-                            console.log(6);
-                            console.log(feitas, porFazer);
                             return res.status(200).json({ "menssagem": "Tarefa atualizada com sucesso." });
                         }
                         else {
                             feito = false;
                             buscaIdPorFazer[0].feito = feito;
-                            console.log(feitas, porFazer);
                             return res.status(200).json({ "menssagem": "Tarefa atualizada com sucesso." });
                         }
                     }
@@ -130,11 +121,64 @@ function atualizarTarefa(req, res) {
     } catch (error) {
         return res.status(500).json({ "menssagem": "Erro do servidor" });
     }
+}
 
+function excluirTarefa(req, res) {
+    let { id } = req.params;
+    id = Number(id);
+    let { idDaTarefa } = req.query;
+    idDaTarefa = Number(idDaTarefa);
+    const buscaIdFeitas = feitas.filter((feita) => {
+        return feita.id === id && feita.idDaTarefa === idDaTarefa;
+    })
+    const buscaIdPorFazer = porFazer.filter((porFazer) => {
+        return porFazer.id === id && porFazer.idDaTarefa === idDaTarefa;
+    })
+    if (buscaIdFeitas.length === 1 || buscaIdPorFazer.length === 1) {
+        if (buscaIdFeitas.length === 1) {
+            const indiceDaTarefa = feitas.findIndex((feitas) => {
+                return feitas.id === id && feitas.idDaTarefa === idDaTarefa;
+            })
+            feitas.splice(indiceDaTarefa, 1);
+            return res.status(200).json({ "menssagem": "Tarefa exclída com sucesso." })
+        }
+        if (buscaIdPorFazer.length === 1) {
+            const indiceDaTarefa = porFazer.findIndex((porFazer) => {
+                return porFazer.id === id && porFazer.idDaTarefa === idDaTarefa;
+            })
+            porFazer.splice(indiceDaTarefa, 1);
+            return res.status(200).json({ "menssagem": "Tarefa exclída com sucesso." })
+        }
+    }
+    else {
+        return res.status(401).json({ "menssagem": "Tarefa não encontrada." });
+    }
+
+}
+
+function visualizarTarefasPorFazer(req, res) {
+    let { id } = req.params;
+    id = Number(id);
+    const buscaIdPorFazer = porFazer.filter((feita) => {
+        return feita.id === id;
+    })
+    return res.status(200).json(buscaIdPorFazer);
+}
+
+function visualizarTarefasFeitas(req, res) {
+    let { id } = req.params;
+    id = Number(id);
+    const buscaIdFeitas = feitas.filter((feita) => {
+        return feita.id === id;
+    })
+    return res.status(200).json(buscaIdFeitas);
 }
 
 module.exports = {
     visualizarTarefas,
     adicionarTarefa,
-    atualizarTarefa
+    atualizarTarefa,
+    excluirTarefa,
+    visualizarTarefasFeitas,
+    visualizarTarefasPorFazer
 }
