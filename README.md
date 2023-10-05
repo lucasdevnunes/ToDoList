@@ -1,6 +1,6 @@
 ## **README - Projeto To-Do List com JavaScript e Express**
 
-![GIF demontrativo do projeto]([URL_DO_GIF](https://github.com/lucasdevnunes/ToDoList/blob/main/assets/ToDoList.gif))
+![GIF demontrativo do projeto](https://github.com/lucasdevnunes/ToDoList/blob/main/assets/ToDoList.gif)
 
 __________________________________________________________________________________________________________________________________________________________________________________________
 
