@@ -1,4 +1,4 @@
-### **README - Projeto To-Do List com JavaScript e Express**
+# **README - Projeto To-Do List com JavaScript e Express**
 
 ![GIF demontrativo do projeto](https://github.com/lucasdevnunes/ToDoList/blob/main/assets/ToDoList.gif)
 
@@ -10,55 +10,55 @@ ________________________________________________________________________________
 
 ## Endpoints (rodando na porta 8000):
 
-# -Listar Usuários
+### -Listar Usuários
 
 Rota: GET /usuarios
 
 Descrição: Retorna a lista de todos os usuários cadastrados no sistema. Passando como query o admin e senha (?admin=admin&senha=admin).
 
-# -Adicionar Usuário
+### -Adicionar Usuário
 
 Rota: POST /usuarios/adicionar
 
 Descrição: Permite que um novo usuário seja cadastrado no sistema.
 
--Excluir Usuário
+### -Excluir Usuário
 
 Rota: DELETE /usuarios/:id/excluir
 
 Descrição: Exclui um usuário específico com base no seu ID. Passando como query a senha do usuário (?senha=2).
 
--Visualizar Tarefas
+### -Visualizar Tarefas
 
 Rota: GET /tarefas/:id
 
 Descrição: Retorna as tarefas associadas a um usuário específico com base em seu ID. Passando como query a senha do usuário (?senha=2).
 
--Adicionar Tarefa
+### -Adicionar Tarefa
 
 Rota: POST /tarefas/:id/adicionar
 
 Descrição: Permite que um usuário adicione uma nova tarefa ao seu perfil. Passando como query a senha do usuário (?senha=2).
 
--Atualizar Tarefa
+### -Atualizar Tarefa
 
 Rota: PUT /tarefas/:id/atualizar
 
 Descrição: Permite que um usuário atualize o conteúdo de uma tarefa existente. Passando como query a senha do usuário e o id da tarefa (?senha=2&idaDaTarefa=1).
 
--Excluir Tarefa
+### -Excluir Tarefa
 
 Rota: DELETE /tarefas/:id/excluir
 
 Descrição: Exclui uma tarefa específica com base em seu ID. Passando como query a senha do usuário e o id da tarefa (?senha=2&idaDaTarefa=1).
 
--Visualizar Tarefas Feitas
+### -Visualizar Tarefas Feitas
 
 Rota: GET /tarefas/:id/feitas
 
 Descrição: Retorna todas as tarefas marcadas como concluídas pelo usuário com base em seu ID. Passando como query a senha do usuário (?senha=2).
 
--Visualizar Tarefas por Fazer
+### -Visualizar Tarefas por Fazer
 
 Rota: GET /tarefas/:id/porFazer
 
